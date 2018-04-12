@@ -1,15 +1,14 @@
 #Python libraries that we need to import for our bot
 import random
 import requests
-import os
 import sys
 from flask import Flask, request
 from pymessenger.bot import Bot
 #from pymessenger import Button
 
 app = Flask(__name__)
-ACCESS_TOKEN = os.environ['EAAFVAFt33ZAsBAAY2IlryuVDI8QZBZAhB3JZCWgma35wAnNlklpf6iQBSRtPRyInvVlITT1sGq3Ro881cz4dkc0ZAqz1snitBjVtMGDZBn1y9zSyBnTM1ZA8bOiJvDfZBm5anWyUmKxeKdJZBdCGWk5US6mgyMuKg7hvG9rHFZAacYpwZDZD']
-VERIFY_TOKEN = os.environ['siwine']
+ACCESS_TOKEN = 'EAAFVAFt33ZAsBAAY2IlryuVDI8QZBZAhB3JZCWgma35wAnNlklpf6iQBSRtPRyInvVlITT1sGq3Ro881cz4dkc0ZAqz1snitBjVtMGDZBn1y9zSyBnTM1ZA8bOiJvDfZBm5anWyUmKxeKdJZBdCGWk5US6mgyMuKg7hvG9rHFZAacYpwZDZD'
+VERIFY_TOKEN = 'siwine'
 
 bot=Bot(ACCESS_TOKEN)
 url='https://cdn.pixabay.com/photo/2016/06/18/17/42/image-1465348_960_720.jpg'
