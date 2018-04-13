@@ -112,7 +112,7 @@ def get_started():
     }
     payload={
             #"get_started": {"payload": "<postback_payload>"}
-            "get_started": {"payload": "GET_STARTED"}
+            'message': json.dumps( {"postback": {"payload": "GET_STARTED"}})
             }
     request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
     response = requests.post(request_endpoint,headers=headers,
