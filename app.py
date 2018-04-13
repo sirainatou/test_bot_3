@@ -80,9 +80,11 @@ def send_quick_replies(recipient_id, image_url):
 	#bot.send_image(recipient_id, image_url)
 	return "sucess"   
 def get_started():
-    payload={ 
-    "get_started":{"payload":"GET_STARTED_PAYLOAD"}
-    }
+    payload={
+	    "messaging"{
+   		"get_started":{"payload":"GET_STARTED_PAYLOAD"}
+    		}
+    	}
     request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
     response = requests.post(
             request_endpoint,
