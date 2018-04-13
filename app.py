@@ -87,7 +87,7 @@ def greetings():
         'Content-Type': 'application/json',
     }
     params = {
-        'access_token': access_token,
+        'access_token': ACCESS_TOKEN,
     }
     payload={
       "greeting": [
