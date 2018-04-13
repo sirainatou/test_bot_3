@@ -87,14 +87,11 @@ def greetings():
     headers = {
         'Content-Type': 'application/json',
     }
-    params = {
-        'access_token': ACCESS_TOKEN,
-    }
     payload={
       "greeting": [
         {
           "locale":"default",
-          "text":"Hello!" 
+          "text":"Hello :) <3 " 
         }, {
           "locale":"en_US",
           "text":"Timeless apparel for the masses."
@@ -103,18 +100,23 @@ def greetings():
     }
     request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
 
-    response = requests.post(request_endpoint, headers=headers, params=params,
+    response = requests.post(request_endpoint, headers=headers,
                              data=json.dumps(payload))
+    print(response)
     response.raise_for_status()
     return response.json() 
 
 def get_started():
+    headers = {
+        'Content-Type': 'application/json',
+    }
     payload={
-            "get_started": {"payload": "<postback_payload>"}
+            #"get_started": {"payload": "<postback_payload>"}
+            "get_started": {"payload": "GET_STARTED"}
             }
     request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
-    response = requests.post(request_endpoint,
-                             json=payload)
+    response = requests.post(request_endpoint,headers=headers,
+                             data=json.dumps(payload))
     result = response.json()
     return result
 
