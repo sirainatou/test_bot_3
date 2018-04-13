@@ -29,7 +29,7 @@ def receive_message():
     else:
         # get whatever message a user sent the bot
        #bot.send_text_message("Hi, this is Engine Bai. Nice to meet you!"
-       get_started()
+       #get_started()
        output = request.get_json()
        log(output)
        for event in output['entry']:
