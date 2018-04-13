@@ -2,6 +2,7 @@
 import random
 import requests
 import sys
+import json
 from flask import Flask, request
 from pymessenger.bot import Bot
 #from pymessenger import Button
@@ -31,6 +32,7 @@ def receive_message():
        output = request.get_json()
        log(output)
        for event in output['entry']:
+          recipient_id=event['sender']['id']
           if 'messaging' in event:
               for message in event['messaging']:
                 if 'message' in message:
