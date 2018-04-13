@@ -37,8 +37,8 @@ def receive_message():
                 if 'message' in message.get('message'):
                     #Facebook Messenger ID for user so we know where to send response back to
                     if message['message'].get('text'):
-                        #response_sent_text = get_message()
-                        #send_message(recipient_id, response_sent_text)
+                        response_sent_text = get_message()
+                        send_message(recipient_id, response_sent_text)
                         #send_buttons_case1(recipient_id)
                         #jbot.send_raw(payload) 
                         print('ok')
@@ -49,7 +49,7 @@ def receive_message():
                         print('attach')        
               elif 'postback' in message:
                   if message['postback']['payload']=="GET_STARTED_PAYLOAD":
-                      #send_message(recipient_id, 'welcome')
+                      send_message(recipient_id, 'welcome')
                       print('okkk')
                     
             
@@ -84,6 +84,20 @@ def send_image(recipient_id, image_url):
 def send_quick_replies(recipient_id, image_url):
 	#bot.send_image(recipient_id, image_url)
 	return "sucess"   
+def get_started():
+    headers = {
+        'Content-Type': 'application/json',
+    }
+    payload={
+            #"get_started": {"payload": "<postback_payload>"}
+            'message': json.dumps( {"postback": {"payload": "GET_STARTED"}})
+            }
+    request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
+    response = requests.post(request_endpoint,headers=headers,
+                             data=json.dumps(payload))
+    result = response.json()
+    return result
+
 def greetings():
     headers = {
         'Content-Type': 'application/json',
@@ -92,7 +106,7 @@ def greetings():
       "greeting": [
         {
           "locale":"default",
-          "text":"Hello :) <3 " 
+          "text":"Hello :) {{user_first_name}} <3 " 
         }, {
           "locale":"en_US",
           "text":"Timeless apparel for the masses."
@@ -107,19 +121,6 @@ def greetings():
     response.raise_for_status()
     return response.json() 
 
-def get_started():
-    headers = {
-        'Content-Type': 'application/json',
-    }
-    payload={
-            #"get_started": {"payload": "<postback_payload>"}
-            'message': json.dumps( {"postback": {"payload": "GET_STARTED"}})
-            }
-    request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
-    response = requests.post(request_endpoint,headers=headers,
-                             data=json.dumps(payload))
-    result = response.json()
-    return result
 
 def log(message):
 	print(message)
