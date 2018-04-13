@@ -83,6 +83,12 @@ def send_quick_replies(recipient_id, image_url):
 	#bot.send_image(recipient_id, image_url)
 	return "sucess"   
 def greetings():
+    headers = {
+        'Content-Type': 'application/json',
+    }
+    params = {
+        'access_token': access_token,
+    }
     payload={
       "greeting": [
         {
@@ -95,12 +101,12 @@ def greetings():
       ]
     }
     request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
-    response = requests.post(
-            request_endpoint,
-            json=payload
-        )
-    result = response.json()
-    return result
+
+    response = requests.post(url, headers=headers, params=params,
+                             data=json.dumps(payload))
+    response.raise_for_status()
+    return response.json() 
+
 def get_started():
     payload={
             "get_started": {"payload": "<postback_payload>"}
