@@ -31,10 +31,10 @@ def receive_message():
        output = request.get_json()
        log(output)
        for event in output['entry']:
-           messaging = event['messaging']
-           for message in messaging:
-               recipient_id = message['sender']['id']
-               if 'message' in message:
+          if 'messaging' in event:
+              for message in event['messaging']:
+                recipient_id = message['sender']['id']
+                if 'message' in message:
                     #Facebook Messenger ID for user so we know where to send response back to
                     if message['message'].get('text'):
                         response_sent_text = get_message()
@@ -46,10 +46,10 @@ def receive_message():
                     if message['message'].get('attachments'):
                         #response_sent_nontext = get_message()
                         #send_message(recipient_id, response_sent_nontext)
-                        print('attach')               
-               elif 'postback' in message:
-                    if message['postback']['payload']=="GET STARTED":
-                        send_message(recipient_id, 'welcome')
+                        print('attach')        
+          elif 'postback' in event:
+              if message['postback']['payload']=="GET STARTED":
+                  send_message(recipient_id, 'welcome')
                     
             
 
