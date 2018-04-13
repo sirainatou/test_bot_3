@@ -51,7 +51,7 @@ def receive_message():
                            send_message(recipient_id, "welcome")
 
            elif 'standby' in event: 
-               print('ok')
+               pass
                     
             
 
