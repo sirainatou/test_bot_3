@@ -93,7 +93,7 @@ def greetings():
     }
     request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
     response = requests.post(request_endpoint,
-			     params=payload
+			     params=payload,
             		     json=payload
         )
     result = response.json()
