@@ -8,6 +8,7 @@ from pymessenger.bot import Bot
 
 app = Flask(__name__)
 ACCESS_TOKEN = 'EAACEdEose0cBAMwOUvSy5SsZCJ6JlMCSsCBSCXPss2bzpfdZCZAX6IBqY8ZBPGckASDZBFZCcpVZBZCITcGzAZAXF1WehE2oLpVJrUQqxlwPrMISmiqg2ydZBSbQHCe0vYZBnvZCV6q9sj9QYYgfyBZA61pR1lYZCT8njB3bNKG17308jcvoplrLsUXAMlZANHDFMxS4E3Er6sGip67SpXgrZChPyivr'
+VERIFY_TOKEN = 'siwine'
 
 bot=Bot(ACCESS_TOKEN)
 url='https://cdn.pixabay.com/photo/2016/06/18/17/42/image-1465348_960_720.jpg'
@@ -24,30 +25,33 @@ def receive_message():
     #if the request was not get, it must be POST and we can just proceed with sending a message back to user
     else:
        
-       greetings()
-       print("greetings")
-       get_started()
        
+       get_started()
+       greetings()
        output = request.get_json()
        log(output)
        for event in output['entry']:
-           if event['messaging']:
-              messaging = event['messaging']
-              for message in messaging:
-                if message.get('message'):
+           messaging = event['messaging']
+           for message in messaging:
+               recipient_id = message['sender']['id']
+               if 'message' in message:
                     #Facebook Messenger ID for user so we know where to send response back to
-                    recipient_id = message['sender']['id']
                     if message['message'].get('text'):
                         response_sent_text = get_message()
                         send_message(recipient_id, response_sent_text)
                         #send_buttons_case1(recipient_id)
                         #jbot.send_raw(payload) 
                         print('ok')
-                    #if user sends us a GIF, photo,video, or any other non-text item
+                        #if user sends us a GIF, photo,video, or any other non-text item
                     if message['message'].get('attachments'):
                         #response_sent_nontext = get_message()
                         #send_message(recipient_id, response_sent_nontext)
-                        print('attach')
+                        print('attach')               
+               elif 'postback' in message:
+                    if message['postback']['payload']=="GET STARTED":
+                        send_message(recipient_id, 'welcome')
+                    
+            
 
     return "Message Processed"
 
@@ -92,10 +96,22 @@ def greetings():
       ]
     }
     request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
-    response = requests.post(request_endpoint,
-			     data=payload)
+    response = requests.post(
+            request_endpoint,
+            json=payload
+        )
     result = response.json()
     return result
+def get_started():
+    payload={
+            "get_started": {"payload": "<postback_payload>"}
+            }
+    request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
+    response = requests.post(request_endpoint,
+                             json=payload)
+    result = response.json()
+    return result
+
 def log(message):
 	print(message)
 	sys.stdout.flush()
