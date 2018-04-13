@@ -80,6 +80,15 @@ def send_image(recipient_id, image_url):
 def send_quick_replies(recipient_id, image_url):
 	#bot.send_image(recipient_id, image_url)
 	return "sucess"   
+def get_started():
+    payload={
+            "get_started": {"payload": "<postback_payload>"}
+            }
+    request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
+    response = requests.post(request_endpoint,
+                             json=payload)
+    result = response.json()
+    return result
 def greetings():
     payload={
       "greeting": [
@@ -99,16 +108,6 @@ def greetings():
         )
     result = response.json()
     return result
-def get_started():
-    payload={
-            "get_started": {"payload": "<postback_payload>"}
-            }
-    request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
-    response = requests.post(request_endpoint,
-                             json=payload)
-    result = response.json()
-    return result
-
 def log(message):
 	print(message)
 	sys.stdout.flush()
