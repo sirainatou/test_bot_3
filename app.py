@@ -25,9 +25,10 @@ def receive_message():
     #if the request was not get, it must be POST and we can just proceed with sending a message back to user
     else:
        
-       
-       get_started()
        greetings()
+       print("greetings")
+       get_started()
+       
        output = request.get_json()
        log(output)
        for event in output['entry']:
