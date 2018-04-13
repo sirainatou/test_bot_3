@@ -81,7 +81,7 @@ def send_quick_replies(recipient_id, image_url):
 	return "sucess"   
 def get_started():
     payload={
-	    "messaging"{
+	    "messaging":{
    		"get_started":{"payload":"GET_STARTED_PAYLOAD"}
     		}
     	}
