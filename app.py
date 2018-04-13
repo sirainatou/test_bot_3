@@ -5,7 +5,6 @@ import sys
 import json
 from flask import Flask, request
 from pymessenger.bot import Bot
-#from pymessenger import Button
 
 app = Flask(__name__)
 ACCESS_TOKEN = 'EAACEdEose0cBAMwOUvSy5SsZCJ6JlMCSsCBSCXPss2bzpfdZCZAX6IBqY8ZBPGckASDZBFZCcpVZBZCITcGzAZAXF1WehE2oLpVJrUQqxlwPrMISmiqg2ydZBSbQHCe0vYZBnvZCV6q9sj9QYYgfyBZA61pR1lYZCT8njB3bNKG17308jcvoplrLsUXAMlZANHDFMxS4E3Er6sGip67SpXgrZChPyivr'
@@ -104,7 +103,7 @@ def greetings():
     }
     request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
 
-    response = requests.post(url, headers=headers, params=params,
+    response = requests.post(request_endpoint, headers=headers, params=params,
                              data=json.dumps(payload))
     response.raise_for_status()
     return response.json() 
