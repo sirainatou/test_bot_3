@@ -85,7 +85,7 @@ def get_started():
             "get_started": {"payload": "<postback_payload>"}
             }
     request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
-    response = requests.post(request_endpoint,
+    response = requests.delete(request_endpoint,
                              json=payload)
     result = response.json()
     return result
