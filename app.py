@@ -25,6 +25,7 @@ def receive_message():
         return verify_fb_token(token_sent)
     #if the request was not get, it must be POST and we can just proceed with sending a message back to user
     else:
+       get_started()
        greetings()
        output = request.get_json()
        log(output)
