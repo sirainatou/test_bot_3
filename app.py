@@ -39,8 +39,8 @@ def receive_message():
                 #Facebook Messenger ID for user so we know where to send response back to
                 recipient_id = message['sender']['id']
                 if message['message'].get('text'):
-                    #response_sent_text = get_message()
-                    #send_message(recipient_id, response_sent_text)
+                    response_sent_text = get_message()
+                    send_message(recipient_id, response_sent_text)
                     #send_buttons_case1(recipient_id)
                     #jbot.send_raw(payload) 
                     print('ok')
