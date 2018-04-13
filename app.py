@@ -5,17 +5,6 @@ import sys
 import json
 from flask import Flask, request
 from pymessenger.bot import Bot
-#from pymessenger import Button
-
-app = Flask(__name__)
-ACCESS_TOKEN = #Python libraries that we need to import for our bot
-import random
-import requests
-import sys
-import json
-from flask import Flask, request
-from pymessenger.bot import Bot
-#from pymessenger import Button
 
 app = Flask(__name__)
 ACCESS_TOKEN = 'EAAFVAFt33ZAsBAG9zLlkMehDcX29SaYL8lcnVSydGr5RzGAtfKYZBRmRO8eX3PSRJpLKfJgDl3I2y9V9MdZBlnLj24rEzTx9T01GMW6P83UQkFEUK0KGrczDkgth7XW1ZB8ZBJxObV0WJSu6l38yzHGQ0hZAvhfq2a44Y9ZCERghwZDZD'
