@@ -30,27 +30,28 @@ def receive_message():
        output = request.get_json()
        log(output)
        for event in output['entry']:
-          messaging = event['messaging']
-          for message in messaging :
-              recipient_id=message['sender']['id']
-              if 'messaging' in message:
-                if 'message' in message.get('message'):
-                    #Facebook Messenger ID for user so we know where to send response back to
-                    if message['message'].get('text'):
-                        response_sent_text = get_message()
-                        send_message(recipient_id, response_sent_text)
-                        #send_buttons_case1(recipient_id)
-                        #jbot.send_raw(payload) 
-                        print('ok')
-                        #if user sends us a GIF, photo,video, or any other non-text item
-                    if message['message'].get('attachments'):
-                        #response_sent_nontext = get_message()
-                        #send_message(recipient_id, response_sent_nontext)
-                        print('attach')        
-              elif 'postback' in message:
-                  if message['postback']['payload']=="GET_STARTED_PAYLOAD":
-                      send_message(recipient_id, 'welcome')
-                      print('okkk')
+           if 'messaging' in event:
+               messaging = event['messaging']
+               for message in messaging:
+                   recipient_id=message ['sender']['id']
+                   if 'message' in message:
+                       if message['message'].get('text'):
+                            #response_sent_text = get_message()
+                            #send_message(recipient_id, response_sent_text)
+                            #send_buttons_case1(recipient_id)
+                            #jbot.send_raw(payload) 
+                            print('ok')
+                            #if user sends us a GIF, photo,video, or any other non-text item
+                       if message['message'].get('attachments'):
+                            #response_sent_nontext = get_message()
+                            #send_message(recipient_id, response_sent_nontext)
+                            print('attach')
+                   elif 'postback' in message:
+                       if message['postback']['payload']=="GET_STARTED":
+                           send_message(recipient_id, "welcome")
+
+           elif 'standby' in event: 
+               print('ok')
                     
             
 
