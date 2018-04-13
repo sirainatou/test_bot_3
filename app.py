@@ -8,7 +8,6 @@ from pymessenger.bot import Bot
 
 app = Flask(__name__)
 ACCESS_TOKEN = 'EAACEdEose0cBAMwOUvSy5SsZCJ6JlMCSsCBSCXPss2bzpfdZCZAX6IBqY8ZBPGckASDZBFZCcpVZBZCITcGzAZAXF1WehE2oLpVJrUQqxlwPrMISmiqg2ydZBSbQHCe0vYZBnvZCV6q9sj9QYYgfyBZA61pR1lYZCT8njB3bNKG17308jcvoplrLsUXAMlZANHDFMxS4E3Er6sGip67SpXgrZChPyivr'
-VERIFY_TOKEN = 'siwine'
 
 bot=Bot(ACCESS_TOKEN)
 url='https://cdn.pixabay.com/photo/2016/06/18/17/42/image-1465348_960_720.jpg'
@@ -80,34 +79,6 @@ def send_image(recipient_id, image_url):
 def send_quick_replies(recipient_id, image_url):
 	#bot.send_image(recipient_id, image_url)
 	return "sucess"   
-def get_started():
-    payload={
-            "get_started": {"payload": "<postback_payload>"}
-            }
-    request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
-    response = requests.delete(request_endpoint,
-                             json=payload)
-    result = response.json()
-    return result
-def greetings():
-    payload={
-      "greeting": [
-        {
-          "locale":"default",
-          "text":"Hello!" 
-        }, {
-          "locale":"en_US",
-          "text":"Timeless apparel for the masses."
-        }
-      ]
-    }
-    request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
-    response = requests.post(
-            request_endpoint,
-            json=payload
-        )
-    result = response.json()
-    return result
 def log(message):
 	print(message)
 	sys.stdout.flush()
