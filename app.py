@@ -6,10 +6,13 @@ from flask import Flask, request
 from pymessenger.bot import Bot
 #from pymessenger import Button
 
+#from pymessager.message import Messager
+
 app = Flask(__name__)
-ACCESS_TOKEN = 'EAAFVAFt33ZAsBAG9zLlkMehDcX29SaYL8lcnVSydGr5RzGAtfKYZBRmRO8eX3PSRJpLKfJgDl3I2y9V9MdZBlnLj24rEzTx9T01GMW6P83UQkFEUK0KGrczDkgth7XW1ZB8ZBJxObV0WJSu6l38yzHGQ0hZAvhfq2a44Y9ZCERghwZDZD'
+ACCESS_TOKEN = 'EAAFVAFt33ZAsBAAY2IlryuVDI8QZBZAhB3JZCWgma35wAnNlklpf6iQBSRtPRyInvVlITT1sGq3Ro881cz4dkc0ZAqz1snitBjVtMGDZBn1y9zSyBnTM1ZA8bOiJvDfZBm5anWyUmKxeKdJZBdCGWk5US6mgyMuKg7hvG9rHFZAacYpwZDZD'
 VERIFY_TOKEN = 'siwine'
 
+#bot = Bot(ACCESS_TOKEN)
 bot=Bot(ACCESS_TOKEN)
 url='https://cdn.pixabay.com/photo/2016/06/18/17/42/image-1465348_960_720.jpg'
 
@@ -26,30 +29,26 @@ def receive_message():
     else:
         # get whatever message a user sent the bot
        #bot.send_text_message("Hi, this is Engine Bai. Nice to meet you!"
-       #get_started()
-       
-       
+       get_started()
        output = request.get_json()
        log(output)
        for event in output['entry']:
-           if event['messaging']:
-              messaging = event['messaging']
-              for message in messaging:
-                if message.get('message'):
-                    #Facebook Messenger ID for user so we know where to send response back to
-                    recipient_id = message['sender']['id']
-                    if message['message'].get('text'):
-                        response_sent_text = get_message()
-                        send_message(recipient_id, response_sent_text)
-                        #send_buttons_case1(recipient_id)
-                        #jbot.send_raw(payload) 
-                        print('ok')
-                    #if user sends us a GIF, photo,video, or any other non-text item
-                    if message['message'].get('attachments'):
-                        #response_sent_nontext = get_message()
-                        #send_message(recipient_id, response_sent_nontext)
-                        print('attach')
-
+          messaging = event['messaging']
+          for message in messaging:
+            if message.get('message'):
+                #Facebook Messenger ID for user so we know where to send response back to
+                recipient_id = message['sender']['id']
+                if message['message'].get('text'):
+                    #response_sent_text = get_message()
+                    #send_message(recipient_id, response_sent_text)
+                    #send_buttons_case1(recipient_id)
+                    #jbot.send_raw(payload) 
+                    print('ok')
+                #if user sends us a GIF, photo,video, or any other non-text item
+                if message['message'].get('attachments'):
+                    #response_sent_nontext = get_message()
+                    #send_message(recipient_id, response_sent_nontext)
+                    print('attach')
     return "Message Processed"
 
 
@@ -58,7 +57,7 @@ def verify_fb_token(token_sent):
     #if they match, allow the request, else return an error 
     if token_sent == VERIFY_TOKEN:
         return request.args.get("hub.challenge")
-    return 'Hello there'
+    return 'Invalid verification token'
 
 
 #chooses a random message to send to the user
@@ -80,7 +79,17 @@ def send_image(recipient_id, image_url):
 def send_quick_replies(recipient_id, image_url):
 	#bot.send_image(recipient_id, image_url)
 	return "sucess"   
-
+def get_started():
+    payload={ 
+    "get_started":{"payload":"GET_STARTED_PAYLOAD"}
+    }
+    request_endpoint="https://graph.facebook.com/v2.6/me/messenger_profile?access_token="+ACCESS_TOKEN
+    response = requests.post(
+            request_endpoint,
+            json=payload
+        )
+    result = response.json()
+    return result
 def log(message):
 	print(message)
 	sys.stdout.flush()
