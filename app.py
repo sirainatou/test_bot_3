@@ -25,21 +25,19 @@ def receive_message():
         return verify_fb_token(token_sent)
     #if the request was not get, it must be POST and we can just proceed with sending a message back to user
     else:
-       
-       
-       get_started()
        greetings()
        output = request.get_json()
        log(output)
        for event in output['entry']:
-          recipient_id=event['sender']['id']
-          if 'messaging' in event:
-              for message in event['messaging']:
-                if 'message' in message:
+          messaging = event['messaging']
+          for message in messaging :
+              recipient_id=message['sender']['id']
+              if 'messaging' in message:
+                if 'message' in message.get('message'):
                     #Facebook Messenger ID for user so we know where to send response back to
                     if message['message'].get('text'):
-                        response_sent_text = get_message()
-                        send_message(recipient_id, response_sent_text)
+                        #response_sent_text = get_message()
+                        #send_message(recipient_id, response_sent_text)
                         #send_buttons_case1(recipient_id)
                         #jbot.send_raw(payload) 
                         print('ok')
@@ -48,9 +46,10 @@ def receive_message():
                         #response_sent_nontext = get_message()
                         #send_message(recipient_id, response_sent_nontext)
                         print('attach')        
-          elif 'postback' in event:
-              if message['postback']['payload']=="GET STARTED":
-                  send_message(recipient_id, 'welcome')
+              elif 'postback' in message:
+                  if message['postback']['payload']=="GET_STARTED_PAYLOAD":
+                      #send_message(recipient_id, 'welcome')
+                      print('okkk')
                     
             
 
