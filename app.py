@@ -79,7 +79,7 @@ def send_message(recipient_id, response):
     bot.send_text_message(recipient_id, response)
     return "success"
 def send_quick_replies(recipient_id):
-    payload:{
+    payload={
             "recipient":{
                     "id":recipient_id
                         },
@@ -98,7 +98,7 @@ def send_quick_replies(recipient_id):
                     ]
             }
     }
-    request_endpoint:"https://graph.facebook.com/v2.6/me/messages?access_token="+ACCESS_TOKEN
+    request_endpoint="https://graph.facebook.com/v2.6/me/messages?access_token="+ACCESS_TOKEN
     response = requests.post(request_endpoint,headers=headers,
                              data=json.dumps(payload))
     result = response.json()
