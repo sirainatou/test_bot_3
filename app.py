@@ -38,7 +38,7 @@ def receive_message():
                    recipient_id=message ['sender']['id']
                    if 'message' in message:
                        if message['message'].get('text'):
-                          if message['message'].get('text'):
+                          if message['message'].get('text')=='-2':
                               (recipient_id, "mmmm ok")  
                           else:
                             response_sent_text = get_message()
