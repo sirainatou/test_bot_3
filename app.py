@@ -10,9 +10,11 @@ from pymessenger.bot import Bot
 app = Flask(__name__)
 ACCESS_TOKEN = 'EAAFVAFt33ZAsBAG9zLlkMehDcX29SaYL8lcnVSydGr5RzGAtfKYZBRmRO8eX3PSRJpLKfJgDl3I2y9V9MdZBlnLj24rEzTx9T01GMW6P83UQkFEUK0KGrczDkgth7XW1ZB8ZBJxObV0WJSu6l38yzHGQ0hZAvhfq2a44Y9ZCERghwZDZD'
 VERIFY_TOKEN = 'siwine'
+headers = {
+        'Content-Type': 'application/json',
+          }
 
 bot=Bot(ACCESS_TOKEN)
-url='https://cdn.pixabay.com/photo/2016/06/18/17/42/image-1465348_960_720.jpg'
 
 
 #We will receive messages that Facebook sends our bot at this endpoint 
@@ -49,12 +51,11 @@ def receive_message():
                    elif 'postback' in message:
                        if message['postback']['payload']=="GET_STARTED":
                            send_message(recipient_id, "welcome")
+                           send_quick_replies(recipient_id)
 
            elif 'standby' in event: 
                pass
                     
-            
-
     return "Message Processed"
 
 
@@ -77,18 +78,38 @@ def send_message(recipient_id, response):
     #sends user the text message provided via input response parameter
     bot.send_text_message(recipient_id, response)
     return "success"
+def send_quick_replies(recipient_id):
+    payload:{
+            "recipient":{
+                    "id":recipient_id
+                        },
+            "message":{
+                    "text": "Here is a quick reply!",
+                    "quick_replies":[
+                            {
+                            "content_type":"text",
+                            "title":"Search",
+                            "payload":"<POSTBACK_PAYLOAD>",
+                            "image_url":"http://example.com/img/red.png"
+                            },
+                            {
+                            "content_type":"location"
+                            }
+                    ]
+            }
+    }
+    request_endpoint:"https://graph.facebook.com/v2.6/me/messages?access_token="+ACCESS_TOKEN
+    response = requests.post(request_endpoint,headers=headers,
+                             data=json.dumps(payload))
+    result = response.json()
+    return result
 	
 def send_image(recipient_id, image_url):
 	bot.send_image_url(recipient_id, image_url)
 	return "sucess"
-
-def send_quick_replies(recipient_id, image_url):
-	#bot.send_image(recipient_id, image_url)
-	return "sucess"   
+  
 def get_started():
-    headers = {
-        'Content-Type': 'application/json',
-    }
+
     payload={
             #"get_started": {"payload": "<postback_payload>"}
             'message': json.dumps( {"postback": {"payload": "GET_STARTED"}})
@@ -100,9 +121,6 @@ def get_started():
     return result
 
 def greetings():
-    headers = {
-        'Content-Type': 'application/json',
-    }
     payload={
       "greeting": [
         {
