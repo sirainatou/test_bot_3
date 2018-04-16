@@ -61,7 +61,8 @@ def receive_message():
 
 def check_user(recipient_id):
     client=MongoClient("mongodb://127.0.0.1:27017")
-    users=client.users
+    db=client.database
+    users=db.users
     if users.find_one({'id':recipient_id})==None: 
         user={'id':recipient_id,
                'nom':'{{user_first_name}}',
@@ -70,6 +71,7 @@ def check_user(recipient_id):
         
         users.insert_one(user)
     return "success"
+    
     
 def verify_fb_token(token_sent):
     #take token sent by facebook and verify it matches the verify token you sent
