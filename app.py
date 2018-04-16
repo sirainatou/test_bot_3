@@ -38,7 +38,7 @@ def receive_message():
                messaging = event['messaging']
                for message in messaging:
                    recipient_id=message ['sender']['id']
-                   check_user()
+                   check_user(recipient_id)
                    if 'message' in message:
                        if message['message'].get('text'):
                             received_msg=message['message'].get('text')
