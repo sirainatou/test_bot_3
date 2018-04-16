@@ -37,8 +37,9 @@ def receive_message():
            if 'messaging' in event:
                messaging = event['messaging']
                for message in messaging:
-                   recipient_id=message ['sender']['id']
+                   recipient_id=message['sender']['id']
                    check_user(recipient_id)
+                   print('checked')
                    if 'message' in message:
                        if message['message'].get('text'):
                             received_msg=message['message'].get('text')
@@ -63,7 +64,8 @@ def check_user(recipient_id):
     client=MongoClient("mongodb://127.0.0.1:27017")
     db=client.database
     users=db.users
-    if users.find_one({'id':recipient_id})==None: 
+    if users.find_one({'id':recipient_id})==None:
+        print("adding user")
         user={'id':recipient_id,
                'nom':'{{user_first_name}}',
                'prénom':'{{user_last_name}}',
@@ -71,7 +73,6 @@ def check_user(recipient_id):
         
         users.insert_one(user)
     return "success"
-    
     
 def verify_fb_token(token_sent):
     #take token sent by facebook and verify it matches the verify token you sent
