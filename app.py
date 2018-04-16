@@ -5,17 +5,19 @@ import sys
 import json
 from flask import Flask, request
 from pymessenger.bot import Bot
-#from pymessenger import Button
+from pymongo import MongoClient
 
-app = Flask(__name__)
-ACCESS_TOKEN = 'EAAFVAFt33ZAsBAG9zLlkMehDcX29SaYL8lcnVSydGr5RzGAtfKYZBRmRO8eX3PSRJpLKfJgDl3I2y9V9MdZBlnLj24rEzTx9T01GMW6P83UQkFEUK0KGrczDkgth7XW1ZB8ZBJxObV0WJSu6l38yzHGQ0hZAvhfq2a44Y9ZCERghwZDZD'
-VERIFY_TOKEN = 'siwine'
+
 headers = {
         'Content-Type': 'application/json',
           }
+ACCESS_TOKEN = 'EAAFVAFt33ZAsBAG9zLlkMehDcX29SaYL8lcnVSydGr5RzGAtfKYZBRmRO8eX3PSRJpLKfJgDl3I2y9V9MdZBlnLj24rEzTx9T01GMW6P83UQkFEUK0KGrczDkgth7XW1ZB8ZBJxObV0WJSu6l38yzHGQ0hZAvhfq2a44Y9ZCERghwZDZD'
+VERIFY_TOKEN='siwine'
 
+
+app = Flask(__name__)
 bot=Bot(ACCESS_TOKEN)
-
+ #***********************************************************************************************************************************
 
 #We will receive messages that Facebook sends our bot at this endpoint 
 @app.route("/", methods=['GET', 'POST'])
@@ -36,16 +38,11 @@ def receive_message():
                messaging = event['messaging']
                for message in messaging:
                    recipient_id=message ['sender']['id']
+                   check_user()
                    if 'message' in message:
                        if message['message'].get('text'):
-                          if message['message'].get('text')=='-2':
-                              send_message(recipient_id, "mmmm ok")  
-                          else:
-                            response_sent_text = get_message()
-                            send_message(recipient_id, response_sent_text)
-                  
-                            #send_buttons_case1(recipient_id)
-                            #jbot.send_raw(payload) 
+                            received_msg=message['message'].get('text')
+                            get_message(recipient_id,received_msg)
                             print('ok')
                             #if user sends us a GIF, photo,video, or any other non-text item
                        if message['message'].get('attachments'):
@@ -55,14 +52,25 @@ def receive_message():
                    elif 'postback' in message:
                        if message['postback']['payload']=="GET_STARTED":
                            send_message(recipient_id, "welcome")
-                           send_quick_replies(recipient_id)
+                           verify
 
            elif 'standby' in event: 
                pass
                     
     return "Message Processed"
 
-
+def check_user(recipient_id):
+    client=MongoClient("mongodb://127.0.0.1:27017")
+    users=client.users
+    if users.find_one({'id':recipient_id})==None: 
+        user={'id':recipient_id,
+               'nom':'{{user_first_name}}',
+               'prénom':'{{user_last_name}}',
+               }
+        
+        users.insert_one(user)
+    return "success"
+    
 def verify_fb_token(token_sent):
     #take token sent by facebook and verify it matches the verify token you sent
     #if they match, allow the request, else return an error 
@@ -71,12 +79,15 @@ def verify_fb_token(token_sent):
     return 'Hello there'
 
 
-#chooses a random message to send to the user
-def get_message():
-    sample_responses = ["You are stunning!","cool", "We're proud of you.", "Keep on being you!", "We're greatful to know you :)"]
-    # return selected item to the user
-    return random.choice(sample_responses)
+def get_message(recipient_id,msg):
+    if msg=='fille': 
+        send_message(recipient_id, 'you are beautiful')
+    elif msg=='garçon':
+        send_message(recipient_id, 'you are beautiful')
 
+    # return selected item to the user
+    return "sucess"
+#def check(recipient_id,)
 #uses PyMessenger to send response to user
 def send_message(recipient_id, response):
     #sends user the text message provided via input response parameter
