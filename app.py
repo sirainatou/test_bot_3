@@ -38,7 +38,7 @@ def receive_message():
                messaging = event['messaging']
                for message in messaging:
                    recipient_id=message['sender']['id']
-                   check_user(recipient_id)
+                   #check_user(recipient_id)
                    print('checked')
                    if 'message' in message:
                        if message['message'].get('text'):
@@ -89,7 +89,7 @@ def get_message(recipient_id,msg):
         send_message(recipient_id, 'you are beautiful')
 
     # return selected item to the user
-    return "sucess"
+    return "success"
 #def check(recipient_id,)
 #uses PyMessenger to send response to user
 def send_message(recipient_id, response):
