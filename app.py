@@ -11,9 +11,6 @@ from pymongo import MongoClient
 headers = {
         'Content-Type': 'application/json',
           }
-ACCESS_TOKEN = 'EAAFVAFt33ZAsBAG9zLlkMehDcX29SaYL8lcnVSydGr5RzGAtfKYZBRmRO8eX3PSRJpLKfJgDl3I2y9V9MdZBlnLj24rEzTx9T01GMW6P83UQkFEUK0KGrczDkgth7XW1ZB8ZBJxObV0WJSu6l38yzHGQ0hZAvhfq2a44Y9ZCERghwZDZD'
-VERIFY_TOKEN='siwine'
-
 
 app = Flask(__name__)
 bot=Bot(ACCESS_TOKEN)
