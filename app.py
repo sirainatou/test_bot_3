@@ -52,7 +52,7 @@ def receive_message():
                             print('attach')
                    elif 'postback' in message:
                        if message['postback']['payload']=="GET_STARTED":
-                           send_message(recipient_id, "welcome{}",{{user_first_name}})
+                           send_message(recipient_id, "welcome {{user_first_name}}")
                            verify
 
            elif 'standby' in event: 
